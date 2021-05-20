@@ -1,0 +1,4 @@
+Sum of array elements:55
+Sum of array elements:155
+Sum of array elements:255
+Sum of array elements:355
