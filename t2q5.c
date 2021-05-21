@@ -1,70 +1,53 @@
-//Sir's code...
+//thread read-write lock....
 
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 
 float Temp=27.00;
-bool isHighTemp=false;
+int fd;
+char buff[100];
+//fd=open("data.txt", O_RDONLY | O_WRONLY);
+
 pthread_t tid1,tid2,tid3;
 pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
 pthread_mutex_t mlock=PTHREAD_MUTEX_INITIALIZER;
+
 void* lcdSensorReaderThread(void* arg)
 {
-	char *thead_id=(char *)arg;
+	char *thread_id=(char *)arg;
+	printf("%s reading data:\n",thread_id);
 	while(1) {
 		
 		pthread_rwlock_rdlock(&lock);
-		printf("%s:Current Temp:%f \n",thead_id,Temp);
+		read(fd,buff,5);
+		//read(fd,buff,6);
+		printf("%s.....buff:%s\n",thread_id,buff);
+		
 		pthread_rwlock_unlock(&lock);
-		sleep(1);
-		
-		pthread_mutex_lock(&mlock);
-		if(isHighTemp==true) {
-			pthread_mutex_unlock(&mlock);
-			pthread_exit(NULL);
-		}
-		else
-			pthread_mutex_unlock(&mlock);	
-		
-			
+		sleep(1);					
 	}
 	return NULL;
 }
 
 void* SmartHomeMonitor(void* arg)
 {
-	char *thead_id=(char *)arg;
+	char *thread_id=(char *)arg;
+	printf("%s reading data:\n",thread_id);
 	while(1) {
 		
 		pthread_rwlock_rdlock(&lock);
-		//printf("%s:Current Temp:%f \n",thead_id,Temp);
-		if(Temp<=45.00 && Temp>=27.00) {
-
-			pthread_mutex_lock(&mlock);
-			isHighTemp=false;
-			pthread_mutex_unlock(&mlock);	
-			printf("%s:Temp:%f under control..!\n\n",thead_id,Temp);
-		}
-		else {
-
-			printf("%s:Temp:%f out of control.\n\n",thead_id,Temp);
-			pthread_mutex_lock(&mlock);
-			isHighTemp=true;
-			pthread_mutex_unlock(&mlock); // unlocking before exiting..
-			pthread_rwlock_unlock(&lock); // unlocking before exiting..
-			//pthread_cancel(tid1);
-			//pthread_cancel(tid2);
-			pthread_exit(NULL);
-		}		
-		pthread_rwlock_unlock(&lock);
-		sleep(1);
-		
-			
+		read(fd,buff,5);
+		//read(fd,buff,6);
+		printf("%s.....buff:%s\n",thread_id,buff);
+		pthread_rwlock_unlock(&lock); // unlocking before exiting..		
+		sleep(1);		
 	}
 	return NULL;
 }
@@ -72,38 +55,30 @@ void* SmartHomeMonitor(void* arg)
 void* sensorEvent(void* arg) // write
 {
 	int Timer=0;
-	char *thead_id=(char *)arg;
+	char *thread_id=(char *)arg;
 	while(1) {
 		
 		if(Timer>5) {
 			Timer=0;
-			printf("%s Timer event  Received..! \n\n",thead_id);
+
 			pthread_rwlock_wrlock(&lock);
-			printf("%s Locked Updating Temp\n\n",thead_id);
+			printf("%s Locked Updating Temp..%f\n\n",thread_id,Temp);
 			Temp+=5.00;
+            write(fd,&Temp,5);
+			//write(fd,"Hi...\n",6);
 			pthread_rwlock_unlock(&lock);
 		}	
 		Timer++;	
-		sleep(1);
-		pthread_mutex_lock(&mlock);
-		if(isHighTemp==true) {
-			pthread_mutex_unlock(&mlock);	
-			pthread_exit(NULL);
-		}
-		else
-			pthread_mutex_unlock(&mlock);		
-				
+		sleep(1);		
 	}
 	return NULL;
 }
 
 int main(void)
 {
-
-	printf("main:SmartHomeSystem started..!\n");
-	int i = 0;
-	int error;
+	fd=open("sensorout.txt", O_RDONLY | O_WRONLY);
 	
+	int error;	
 	error = pthread_create(&tid1,NULL,&lcdSensorReaderThread,(void *) "thread1_LCD");
 	if (error != 0)
 		printf("\nThread can't be created :[%s]",strerror(error));
@@ -112,29 +87,14 @@ int main(void)
 	if (error != 0)
 		printf("\nThread can't be created :[%s]",strerror(error));
 
-	error = pthread_create(&tid2,NULL,&SmartHomeMonitor, (void *) "thread3_SHM");
+	error = pthread_create(&tid3,NULL,&SmartHomeMonitor, (void *) "thread3_SHM");
 	if (error != 0)
 		printf("\nThread can't be created :[%s]",strerror(error));
 
-	while(1) {
-		pthread_mutex_lock(&mlock);
-		if(isHighTemp==true) {
-
-			printf("System Found Temp out of control..!\n");
-			pthread_mutex_unlock(&mlock);
-			//pthread_cancel(tid1);
-			//pthread_cancel(tid2);
-			break;
-		}
-		else 
-			pthread_mutex_unlock(&mlock);
-
-		sleep(5);
-		
-	}
-	printf("main:SmartHomeSystem Ending..!\n");	
+	close(fd);
 	pthread_join(tid1, NULL);
 	pthread_join(tid2, NULL);
-	
+	pthread_join(tid3, NULL);
+
 	return 0;
 }
