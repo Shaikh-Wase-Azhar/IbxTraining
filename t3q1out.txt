@@ -1,0 +1,3 @@
+parent:Enter the msg:
+parent:Writing msg in pipe: hello
+child:Read msg from pipe: hello
