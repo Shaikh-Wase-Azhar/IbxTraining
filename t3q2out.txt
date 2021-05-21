@@ -1,0 +1,4 @@
+Child: Reading from pipe 1 – Message is FromParent
+Child:Enter the msg:Child: Writing to pipe 2 – Message is FromChild
+Parent:Enter the msg:Parent: Writing to pipe 1 – Message is FromParent
+Parent: Reading from pipe 2 – Message is FromChild
