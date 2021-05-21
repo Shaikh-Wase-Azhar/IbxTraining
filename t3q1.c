@@ -18,15 +18,15 @@ int main() {
    pid_t id = fork();
    if(0!=id)
    {  //parent
-    printf("Enter the msg:");
-    gets(s);  
-    printf("Writing msg is: %s\n",s);
+    printf("parent:Enter the msg:");
+    scanf("%s",s);  
+    printf("\nparent:Writing msg in pipe: %s\n",s);
     write(pfds[WRITE], s, sizeof(s));   
    }
    else 
    { //child
     read(pfds[READ], buff, sizeof(buff));
-    printf("Read msg is: %s\n", buff);
+    printf("child:Read msg from pipe: %s\n", buff);
    }
    return 0;
 }
