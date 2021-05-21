@@ -1,0 +1,41 @@
+thread3_SHM reading data:
+thread3_SHM.....buff:
+thread1_LCD reading data:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread2_SSR Locked Updating Temp..27.000000
+
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread2_SSR Locked Updating Temp..32.000000
+
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+thread3_SHM.....buff:
+thread1_LCD.....buff:
+^C
