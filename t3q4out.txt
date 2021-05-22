@@ -1,0 +1,8 @@
+CLIENT_A: Send messages, infinitely, to end enter "end"
+Enter string: innobox
+CLIENT_A:Sent string: "innobox" and string length is 7
+
+CLIENT_B:Received string from A: "" and length is 0
+CLIENT_B:Sent string to C: "" and string length is 0
+
+CLIENT_C:Received string from C: "" and length is 0
