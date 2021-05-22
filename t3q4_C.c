@@ -16,18 +16,16 @@ int main() {
    // Create the FIFO if it does not exist 
    mknod(FIFO_FILE2, S_IFIFO|0640, 0);
    strcpy(end, "end");
-   while(1) {
-      int fd = open(FIFO_FILE2, O_RDONLY);
+   
+      int fd2 = open(FIFO_FILE2, O_RDONLY);
       memset(readbuf,0,sizeof(readbuf)); 	
-      read_bytes = read(fd, readbuf, sizeof(readbuf));
+      read_bytes = read(fd2, readbuf, sizeof(readbuf));
       readbuf[read_bytes] = '\0';
-      printf("CLIENT_C:Received string: \"%s\" and length is %d\n", readbuf, (int)strlen(readbuf));
+      printf("CLIENT_C:Received string from C: \"%s\" and length is %d\n", readbuf, (int)strlen(readbuf));
       to_end = strcmp(readbuf, end);
       if (to_end == 0) {
-         close(fd);
-         break;
+         close(fd2);
       }
-   }
    return 0;
 }
 
