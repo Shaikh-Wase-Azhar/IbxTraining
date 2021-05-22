@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-/*
+
 #define FIFO_FILE1 "MYFIFO1"
 int main() {
    int end_process;
@@ -36,9 +36,9 @@ int main() {
    }
    return 0;
 }
-*/
 
 
+/*
 int main()
 {
    mkfifo("fifo1", S_IRUSR | S_IWUSR);
@@ -47,7 +47,7 @@ int main()
    close(fd);
    return 0;
 }
-
+*/
 
 
 
