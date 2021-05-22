@@ -13,10 +13,9 @@ int main() {
    char readbuf[80];
    char end_str[5];
    printf("CLIENT_A: Send messages, infinitely, to end enter \"end\"\n");
-   int fd = open(FIFO_FILE1, O_CREAT|O_WRONLY);
+   int fd1 = open(FIFO_FILE1, O_CREAT|O_WRONLY);
    strcpy(end_str, "end");
    
-   while (1) {
       printf("Enter string: ");
       fgets(readbuf, sizeof(readbuf), stdin);
       stringlen = strlen(readbuf);
@@ -25,15 +24,13 @@ int main() {
       
       //printf("end_process is %d\n", end_process);
       if (end_process != 0) {
-         write(fd, readbuf, strlen(readbuf));
+         write(fd1, readbuf, strlen(readbuf));
          printf("CLIENT_A:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
       } else {
-         write(fd, readbuf, strlen(readbuf));
+         write(fd1, readbuf, strlen(readbuf));
          printf("CLIENT_A:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
-         close(fd);
-         break;
+         close(fd1);
       }
-   }
    return 0;
 }
 
@@ -48,6 +45,3 @@ int main()
    return 0;
 }
 */
-
-
-
