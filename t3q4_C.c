@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-/*
+
 #define FIFO_FILE2 "MYFIFO2"
 int main() {
    char readbuf[80];
@@ -30,9 +30,9 @@ int main() {
    }
    return 0;
 }
-*/
 
 
+/*
 int main()
 {
    unsigned char buff[50];
@@ -43,11 +43,4 @@ int main()
    close(fd);
    return 0;
 }
-
-
-
-
-
-
-
-
+*/
