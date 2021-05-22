@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-/*
+
 #define FIFO_FILE1 "MYFIFO1"
 #define FIFO_FILE2 "MYFIFO2"
 int main() {
@@ -13,39 +13,52 @@ int main() {
    char end[10];
    int to_end;
    int read_bytes;
+
+   int  end_str[5];
    
    // Create the FIFO if it does not exist 
-   mknod(FIFO_FILE, S_IFIFO|0640, 0);
+   mknod(FIFO_FILE1, S_IFIFO|0640, 0);
    strcpy(end, "end");
-
-   //printf("CLIENT_B: Send messages to C, infinitely, to end enter \"end\"\n");
-   //int fd = open(FIFO_FILE2, O_CREAT|O_WRONLY);
-   //strcpy(end_str, "end");
-
-   while(1) {
-      int fd1 = open(FIFO_FILE1, O_RDONLY);
-      memset(readbuf,0,sizeof(readbuf)); 	
-      read_bytes = read(fd, readbuf, sizeof(readbuf));
-      readbuf[read_bytes] = '\0';
-      printf("CLIENT_B:Received string from A: \"%s\" and length is %d\n", readbuf, (int)strlen(readbuf));
-      to_end = strcmp(readbuf, end);
-      if (to_end == 0) {
-         close(fd);
-         break;
-      }
-   }
 
    printf("CLIENT_B: Send messages to C, infinitely, to end enter \"end\"\n");
    int fd2 = open(FIFO_FILE2, O_CREAT|O_WRONLY);
    strcpy(end_str, "end");
 
+   while(1) {
+      int fd1 = open(FIFO_FILE1, O_RDONLY);
+      memset(readbuf,0,sizeof(readbuf)); 	
+      read_bytes = read(fd1, readbuf, sizeof(readbuf));
+      readbuf[read_bytes] = '\0';
+      printf("CLIENT_B:Received string from A: \"%s\" and length is %d\n", readbuf, (int)strlen(readbuf));
+      to_end = strcmp(readbuf, end);
+      
+      /*if (to_end == 0) {
+         close(fd);
+         break;
+      }*/
+      int stringlen = strlen(readbuf);
+      readbuf[stringlen - 1] = '\0';
+      int end_process = strcmp(readbuf, end_str);
+      
+      //printf("end_process is %d\n", end_process);
+      if (end_process != 0) {
+         write(fd2, readbuf, strlen(readbuf));
+         printf("CLIENT_B:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
+      } else {
+         write(fd2, readbuf, strlen(readbuf));
+         printf("CLIENT_B:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
+         close(fd1);
+         close(fd2);
+         break;
+      }
+   }
    return 0;
 }
-*/
 
 
 
-int main()
+
+/*int main()
 {
    unsigned char buff[50];
    mkfifo("fifo1", S_IRUSR | S_IWUSR);
@@ -59,10 +72,4 @@ int main()
    write(fd,buff,sizeof(buff));
    close(fd);
    return 0;
-}
-
-
-
-
-
-
+}*/
