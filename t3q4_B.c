@@ -14,17 +14,15 @@ int main() {
    int to_end;
    int read_bytes;
 
-   int  end_str[5];
+   char  end_str[5];
    
    // Create the FIFO if it does not exist 
    mknod(FIFO_FILE1, S_IFIFO|0640, 0);
    strcpy(end, "end");
 
-   printf("CLIENT_B: Send messages to C, infinitely, to end enter \"end\"\n");
    int fd2 = open(FIFO_FILE2, O_CREAT|O_WRONLY);
    strcpy(end_str, "end");
 
-   while(1) {
       int fd1 = open(FIFO_FILE1, O_RDONLY);
       memset(readbuf,0,sizeof(readbuf)); 	
       read_bytes = read(fd1, readbuf, sizeof(readbuf));
@@ -32,10 +30,9 @@ int main() {
       printf("CLIENT_B:Received string from A: \"%s\" and length is %d\n", readbuf, (int)strlen(readbuf));
       to_end = strcmp(readbuf, end);
       
-      /*if (to_end == 0) {
-         close(fd);
-         break;
-      }*/
+      if (to_end == 0) {
+         close(fd1);
+      }
       int stringlen = strlen(readbuf);
       readbuf[stringlen - 1] = '\0';
       int end_process = strcmp(readbuf, end_str);
@@ -43,33 +40,31 @@ int main() {
       //printf("end_process is %d\n", end_process);
       if (end_process != 0) {
          write(fd2, readbuf, strlen(readbuf));
-         printf("CLIENT_B:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
+         printf("CLIENT_B:Sent string to C: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
       } else {
          write(fd2, readbuf, strlen(readbuf));
-         printf("CLIENT_B:Sent string: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
+         printf("CLIENT_B:Sent string to C: \"%s\" and string length is %d\n", readbuf, (int)strlen(readbuf));
          close(fd1);
          close(fd2);
-         break;
       }
-   }
    return 0;
 }
 
 
 
-
-/*int main()
+/*
+int main()
 {
    unsigned char buff[50];
    mkfifo("fifo1", S_IRUSR | S_IWUSR);
-   int fd= open("fifo1", O_RDWR);
-   read(fd, buff ,sizeof(buff));
+   int fd1= open("fifo1", O_RDWR);
+   read(fd1, buff ,sizeof(buff));
    printf("CLIENT B: Recvd data is :%s\n",buff);
-   close(fd);
-
+   close(fd1);
    mkfifo("fifo2", S_IRUSR | S_IWUSR);
-   fd= open("fifo2", O_WRONLY);
-   write(fd,buff,sizeof(buff));
-   close(fd);
+   int fd2= open("fifo2", O_WRONLY);
+   write(fd2,buff,sizeof(buff));
+   close(fd2);
    return 0;
-}*/
+}
+*/
