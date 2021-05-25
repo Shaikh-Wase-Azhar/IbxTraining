@@ -1,9 +1,3 @@
-/*
- * client.c: Client program
- *           to demonstrate interprocess communication
- *           with POSIX message queues
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,8 +13,19 @@
 #define MAX_MSG_SIZE 256
 #define MSG_BUFFER_SIZE MAX_MSG_SIZE + 10
 
+struct Q{
+
+    char qname[];
+    char buff[];
+    int cmd;
+}s1={c1,"",0};
+
+
 int main (int argc, char **argv)
 {
+    printf("C1:Enter the message for Reciever:");
+    fgets(s1.buff);
+    
     char client_queue_name [64];
     mqd_t qd_server, qd_client;   // queue descriptors
 
