@@ -18,7 +18,7 @@ struct Q{
     char qname[10];
     char buff[100];
     int cmd;
-}s1={c1,"",0};
+}s1={"c1","",0};
 
 
 int main (int argc, char **argv)
@@ -30,7 +30,7 @@ int main (int argc, char **argv)
     mqd_t qd_server, qd_client;   // queue descriptors
 
 
-     create the client queue for receiving messages from server
+     //create the client queue for receiving messages from server
     sprintf (client_queue_name, "/sp-example-client-%d", getpid ());
 
     struct mq_attr attr;
