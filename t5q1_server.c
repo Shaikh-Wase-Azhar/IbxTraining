@@ -71,4 +71,3 @@ int main(int argc, char const *argv[])
 	close(server_fd); // closing server fd
 	return 0;
 }
-
