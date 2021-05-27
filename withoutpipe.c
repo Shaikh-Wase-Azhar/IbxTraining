@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t lock;
 int arr[10];
 
@@ -11,7 +12,7 @@ void *in(void *arg)
         {pthread_mutex_lock(&lock);  //lock
         printf("T1:Enter the integer:\n");
         scanf("%d",arr[i]);
-
+        pthread_cond_signal( &cond ); 
         pthread_mutex_unlock(&lock);  //unlock
     }
     return NULL;
@@ -20,6 +21,7 @@ void *in(void *arg)
 
 void *out(void *arg)
 {
+        pthread_cond_wait( &cond,&lock); 
         for(int i=0; i<10; i++)
         {
         pthread_mutex_lock(&lock);  //lock
