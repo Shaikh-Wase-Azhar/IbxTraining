@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <unistd.h>
 
-//pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t lock;
 int arr[10];
 
@@ -14,18 +14,18 @@ void *in(void *arg)
         scanf("%d",&arr[i]);
         pthread_mutex_unlock(&lock);  //unlock
     }
-    //pthread_cond_signal( &cond ); 
+    pthread_cond_signal( &cond ); 
     return NULL;
 }
 
 
 void *out(void *arg)
 {
-    sleep(1);
-       // pthread_cond_wait( &cond,&lock); 
+        //sleep(1);
+        pthread_cond_wait( &cond,&lock); 
         for(int i=0; i<10; i++)
         {
-        pthread_mutex_lock(&lock);  //lock
+        //pthread_mutex_lock(&lock);  //lock
         printf("T2:%dth integer is:%d\n",i,arr[i]);
         pthread_mutex_unlock(&lock);  //unlock
         }
