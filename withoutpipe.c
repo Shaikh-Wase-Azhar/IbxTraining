@@ -2,31 +2,58 @@
 #include <pthread.h>
 #include <unistd.h>
 
+#define SIZE 10
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t lock;
-int arr[10];
+int arr[SIZE],rear=-1,front=-1;                            
 
-void *in(void *arg)
+void *T1(void *arg)
 {
-    for(int i=0; i<10; i++)
-        {pthread_mutex_lock(&lock);  //lock
-        printf("T1:Enter the integer:");
-        scanf("%d",&arr[i]);
+    while(1)
+       {
+        pthread_mutex_lock(&lock);  //lock
+        if(rear==SIZE-1) 
+            {
+                printf("T1:Pipe is Full,wait to get empty....\n");
+                break;
+            }
+        else if(front==-1 && rear==-1)
+            { 
+                front=rear=0;
+                printf("T1.1:Enter the integer:");
+                scanf("%d",&arr[rear++]);
+            }
+        else{
+                printf("T1.2:Enter the integer:");
+                scanf("%d",&arr[++rear]);
+            }
         pthread_mutex_unlock(&lock);  //unlock
-    }
-    pthread_cond_signal( &cond ); 
+     pthread_cond_signal( &cond );
+    } 
     return NULL;
 }
 
-
-void *out(void *arg)
+void *T2(void *arg)
 {
-        //sleep(1);
-        pthread_cond_wait( &cond,&lock); 
-        for(int i=0; i<10; i++)
+        pthread_cond_wait( &cond,&lock); //lock
+       // pthread_mutex_lock(&lock);  //lock
+        while(1)
         {
-        //pthread_mutex_lock(&lock);  //lock
-        printf("T2:%dth integer is:%d\n",i,arr[i]);
+        if(front==-1 && rear==-1)  
+           {
+                printf("T2.1:Pipe is Empty,wait to input....\n");
+                break;
+           }
+        else if(front==rear)  
+        {
+            front=rear=-1;
+            printf("T2.2:Pipe is Empty,wait to input....\n");
+            //break;
+        }
+        else 
+            {
+                printf("T2:read data is:%d\n",arr[front++]);
+            }
         pthread_mutex_unlock(&lock);  //unlock
         }
     return NULL;
@@ -36,8 +63,8 @@ int main ()
 {
     pthread_t tid1,tid2;
     pthread_mutex_init(&lock,NULL);
-    pthread_create(&tid1, NULL, &in, NULL);
-    pthread_create(&tid2, NULL, &out, NULL);
+    pthread_create(&tid1, NULL, &T1, NULL);
+    pthread_create(&tid2, NULL, &T2, NULL);
 
     pthread_join(tid1, NULL);
     pthread_join(tid2, NULL);
