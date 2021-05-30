@@ -1,0 +1,50 @@
+$ ping 192.168.50.1
+
+$ ifconfig
+
+$sudo dhclient -r enp0s3
+$ sudo ifconfig enp0s3 down
+$ sudo ifconfig enp0s3 hw ether 08:00:27:da:86:66
+$ sudo ifconfig enp0s3 up
+$ sudo ifconfig enp0s3 mtu 1560
+$ ifconfig
+
+$ sudo dhclient -r enp0s3
+$ sudo dhclient -I enp0s3
+
+$ sudo vim /etc/dhcp/
+
+$ iw phy
+$ iwconfig //No wireless extentions
+$ wlanconfig //not working
+
+$ wpa_supplicant
+$ vim /etc/demo.conf
+network={
+    ssid="something"
+    psk="pass"
+}
+
+
+$ sudo service network-manager stop
+$ sudo vim /etc/NetworkManager/NetworkManager.conf
+[keyfile]
+unmanaged-devices=interface-name: enp0s3
+$ sudo service network-manager restart
+
+
+$ sudo iw dev enp0s3 station get <aa:bb:cc:dd:ee:ff>
+$ sudo iw dev enp0s3 set power_save off
+
+$ ip route
+$ traceroute google.com
+
+$ brctl show br-lan
+$ brctl
+
+$ brctl addbr <newbridge>  //not permited
+$ wlanconfig ath1 list 
+
+$ netstat 
+$ nslookup
+
