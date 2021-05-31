@@ -8,17 +8,21 @@
 #include <sys/types.h>
 
 sem_t count_sem;
+//pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
 int *count;
 int input;
-
 
 void *sendr(void *arg)
 {        
     while(1){
+        printf("Enter a integer:");
         sem_wait(&count_sem);
         scanf("%d",&input);
         *count=input;
+        //pthread_cond_signal(&cond);
         sem_post(&count_sem);
+        sleep(1);
     }
     return NULL;
 }
@@ -27,9 +31,11 @@ void *sendr(void *arg)
 void *rcvr(void *arg)
 {
     while(1){
+        //pthread_cond_wait( &cond,);
         sem_wait(&count_sem);
-        printf("count: %d",*count);
+        printf("count: %d\n",*count);
         sem_post(&count_sem);   
+        sleep(1);
     }
     return NULL;
 }
