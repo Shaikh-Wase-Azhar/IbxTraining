@@ -1,0 +1,22 @@
+Enter a integer:1
+count: 1
+count: 1
+Enter a integer:2
+count: 2
+Enter a integer:3
+count: 3
+Enter a integer:4
+count: 4
+Enter a integer:5
+count: 5
+count: 5
+Enter a integer:6
+count: 6
+Enter a integer:7
+count: 7
+Enter a integer:8
+count: 8
+count: 8
+Enter a integer:9
+count: 9
+Enter a integer:^C
