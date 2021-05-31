@@ -22,7 +22,7 @@ void *T1(void *arg)
         else if((rear+1)%SIZE==front)
             {
                 printf("T1:Pipe is Full,wait to get empty....\n");
-                //break;
+               // break;
                 pthread_cond_signal( &condfull );
             }
         else{
@@ -57,7 +57,7 @@ void *T2(void *arg)
         }
         else 
             {      
-                pthread_cond_wait( &condfull, NULL);
+                pthread_cond_wait( &condfull, &lock);
                 printf("T2:read data is:%d\n",arr[front]);
                 front=(front+1)%SIZE;
             }
@@ -78,3 +78,4 @@ int main ()
     pthread_mutex_destroy(&lock);
     return 0;
 }
+
