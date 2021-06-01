@@ -1,4 +1,4 @@
-//sir's code......
+//pthread conditional lock...
 
 #include <pthread.h>
 #include <stdio.h>
@@ -84,9 +84,6 @@ void* sensorEvent(void* arg)
 
 int main(void)
 {
-
-	printf("main:SmartHomeSystem started..!\n");
-	int i = 0;
 	int error;
 	pthread_t tid1,tid2,tid3;
 	error = pthread_create(&tid1,NULL,&lcdSensorReaderThread,(void *) "thread1_LCD");

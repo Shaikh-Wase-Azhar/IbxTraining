@@ -1,5 +1,3 @@
-//thread read-write lock....
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,8 +10,7 @@
 
 float Temp=27.00;
 int fd;
-char buff[100];
-//fd=open("data.txt", O_RDONLY | O_WRONLY);
+unsigned char buff[100];
 
 pthread_t tid1,tid2,tid3;
 pthread_rwlock_t lock = PTHREAD_RWLOCK_INITIALIZER;
@@ -26,8 +23,8 @@ void* lcdSensorReaderThread(void* arg)
 	while(1) {
 		
 		pthread_rwlock_rdlock(&lock);
-		read(fd,buff,5);
-		//read(fd,buff,6);
+		//read(fd,buff,5);
+		read(fd,buff,sizeof("Hi...\n"));
 		printf("%s.....buff:%s\n",thread_id,buff);
 		
 		pthread_rwlock_unlock(&lock);
@@ -43,8 +40,8 @@ void* SmartHomeMonitor(void* arg)
 	while(1) {
 		
 		pthread_rwlock_rdlock(&lock);
-		read(fd,buff,5);
-		//read(fd,buff,6);
+		//read(fd,buff,5);
+		read(fd,buff,sizeof("Hi...\n"));
 		printf("%s.....buff:%s\n",thread_id,buff);
 		pthread_rwlock_unlock(&lock); // unlocking before exiting..		
 		sleep(1);		
@@ -64,8 +61,8 @@ void* sensorEvent(void* arg) // write
 			pthread_rwlock_wrlock(&lock);
 			printf("%s Locked Updating Temp..%f\n\n",thread_id,Temp);
 			Temp+=5.00;
-            write(fd,&Temp,5);
-			//write(fd,"Hi...\n",6);
+           // write(fd,&Temp,sizeof(Temp));
+			write(fd,"Hi...\n",sizeof("Hi...\n"));
 			pthread_rwlock_unlock(&lock);
 		}	
 		Timer++;	
@@ -76,7 +73,8 @@ void* sensorEvent(void* arg) // write
 
 int main(void)
 {
-	fd=open("sensorout.txt", O_RDONLY | O_WRONLY);
+	//int fd;
+	fd=open("sensorout.txt", O_RDWR | O_CREAT);
 	
 	int error;	
 	error = pthread_create(&tid1,NULL,&lcdSensorReaderThread,(void *) "thread1_LCD");
