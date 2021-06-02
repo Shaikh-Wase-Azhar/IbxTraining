@@ -8,7 +8,8 @@
 #include <arpa/inet.h>
 
 #define PORT 8080
-#define UDPPORT	1090
+#define UDPPORT	9090
+#define MAXLINE 1024
 
 int main(int argc, char const *argv[])
 {
@@ -16,8 +17,11 @@ int main(int argc, char const *argv[])
 	struct sockaddr_in address;
 	int opt = 1;
 	int addrlen = sizeof(address);
+	
 	int sockfd;
-	char buffer[1024];
+	char buffer[MAXLINE];
+	char *hello = "Hello from B:..";
+
 	struct sockaddr_in servaddr, cliaddr;
 
 	// Creating socket file descriptor
@@ -26,10 +30,13 @@ int main(int argc, char const *argv[])
 		perror("socket failed");
 		exit(EXIT_FAILURE);
 	}
-    	// Creating socket file descriptor
-	if ( (sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
+
+	
+
+    // Creating socket file descriptor
+	if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
 		perror("socket creation failed");
-		exit(EXIT_FAILURE);
+		return -1;
 	}
 
 	memset(&servaddr, 0, sizeof(servaddr));
@@ -39,7 +46,9 @@ int main(int argc, char const *argv[])
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(UDPPORT);
 	servaddr.sin_addr.s_addr = INADDR_ANY;
-	int n, len;
+	
+	
+
 	// Forcefully attaching socket to the port 8080
 	if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,&opt, sizeof(opt)))
 												
@@ -58,7 +67,8 @@ int main(int argc, char const *argv[])
 		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
-	/////
+
+
 		// Bind the socket with the server address
 	if ( bind(sockfd, (const struct sockaddr *)&servaddr,
 			sizeof(servaddr)) < 0 )
@@ -66,7 +76,9 @@ int main(int argc, char const *argv[])
 		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
-	///////////
+
+
+
 	if (listen(server_fd, 3) != 0)
 	{
 		perror("listen");
@@ -81,18 +93,15 @@ int main(int argc, char const *argv[])
 		}
 		valread = read( new_client_socket , buffer, 100);
 		printf("%s\n",buffer );
-		//////////////////////////////////////
+
+		
+
 		int len, n;
-    	len = sizeof(cliaddr);  //len is value/resuslt
-        sendto(sockfd, (const char *)buffer, sizeof(buffer),MSG_CONFIRM, (const struct sockaddr *) &cliaddr,len);
+    	len = sizeof(servaddr);  //len is value/resuslt
+        sendto(sockfd, (const char *)buffer, sizeof(buffer) ,MSG_CONFIRM, (const struct sockaddr *)&servaddr,len);
 	    printf("Hello message sent.\n");
-		/////////////////////////////
-		/*char buf[1024];
-		n = recvfrom(sockfd, (char *)buf, 1024,MSG_WAITALL, ( struct sockaddr *) &cliaddr,&len);
-    buf[n] = '\0';
-    printf("Client : %s\n", buf);*/
-		/////////////////////////////
-		close(new_client_socket);// // closing client connection..!
+	
+	//	close(new_client_socket);// // closing client connection..!
 	}
 	close(server_fd); // closing server fd
 	close(sockfd);
