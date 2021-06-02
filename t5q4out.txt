@@ -1,0 +1,24 @@
+//server
+Hello from client1
+Hello message sent to client1
+
+Hello from client2
+Hello message sent to client2
+
+Enter Message for client1:innobox
+Sending innobox to client1
+
+Enter Message  for client2:hyderabad
+Sending hyderabad to client2
+
+
+//client 1
+Hello message sent to server
+Hello from server...
+innobox recieved from server
+
+
+//client 2
+Hello message sent to server
+Hello from server...
+hyderabad recieved from server
