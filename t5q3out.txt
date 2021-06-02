@@ -1,0 +1,16 @@
+//A
+A:Enter a string:
+innobox
+A:Message sent to B
+
+//B
+B: innobox
+
+B:Message sent to C
+
+//C
+C: innobox
+
+C:Message recieved
+
+
