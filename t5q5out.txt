@@ -1,0 +1,13 @@
+//server
+Client : from client1 of server1 Hello from udp client:
+Client2:  from client2 of server1 Hello from udp client:
+Hello msg sent
+
+//client 1
+Hello msg sent
+Server: Hello from udp server:..
+
+
+//client 2
+Hello msg sent
+Server: Hello from udp server:..
