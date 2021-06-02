@@ -1,42 +1,56 @@
-// Server side implementation of UDP client-server model
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
+#include <stdio.h>
 #include <sys/socket.h>
-#include <arpa/inet.h>
+#include <stdlib.h>
 #include <netinet/in.h>
+#include <string.h>
+#include <arps/inet.h>
 
-#define UDPPORT	 1090
 
-int main() 
+#define PORT 9090
+#define MAXLINE 1024
+
+int main(int argc, char const *argv[])
 {
-	char buffer[100];
-    int sockfd;
-	struct sockaddr_in servaddr,cliaddr;
-	  //char *hello = "Hello from client";
+	int sockfd;
+	char buffer[MAXLINE] = {0};
+	char *hello = "Hello from  C udp server:..";
+
+	struct sockaddr_in servadd,cliaddr;
 	
 	// Creating socket file descriptor
-	if ( (sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
-		perror("socket creation failed");
+	if ((sockfd = socket(AF_INET, SOCK_DGRAM , 0)) == 0)
+	{
+		perror("socket failed");
 		exit(EXIT_FAILURE);
 	}
-	memset(&servaddr, 0, sizeof(servaddr));
 	
-	
-	// Filling server information
-	servaddr.sin_family = AF_INET; // IPv4
-	servaddr.sin_addr.s_addr = INADDR_ANY;
-	servaddr.sin_port = htons(UDPPORT);
-	
-	int len, n;
+	memset(&servadd,0,sizeof(servadd));
+	memset(&cliaddr,0,sizeof(cliaddr));
 
-	len = sizeof(cliaddr); //len is value/result
-	//sendto(sockfd, (const char *)hello, strlen(hello),MSG_CONFIRM, (const struct sockaddr *) &servaddr,sizeof(servaddr));
-	n = recvfrom(sockfd, (char *)buffer,1024,MSG_WAITALL, (struct sockaddr *) &servaddr,&len);
-	buffer[n] = '\0';
-	printf("Client : %s\n", buffer);
-	close(sockfd);
+
+	//Filing server information
+	servadd.sin_family = AF_INET;  //ipv4
+	servadd.sin_addr.s_addr = INADDR_ANY;
+	servadd.sin_port = htons( PORT );
+	
+	//Bind the socket with server address
+	if (bind(sockfd, (struct sockaddr *)&servadd,
+								sizeof(servadd))<0)
+	{
+		perror("bind failed");
+		exit(EXIT_FAILURE);
+	}
+
+	int len ,n;
+
+	len= sizeof(cliaddr); //len is value/result
+	// MSG_WAITALL wait untill data is recieved..
+	n= recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, (struct sockaddr*)& cliaddr,&len);
+	buffer[n]='\0';
+	printf("Client: %s\n",buffer);
+	sendto(sockfd,(const char*)hello,strlen(hello),MSG_CONFIRM, (struct sockaddr*)&cliaddr, len);
+	printf("Hello msg sent\n");
 	return 0;
 }
+
