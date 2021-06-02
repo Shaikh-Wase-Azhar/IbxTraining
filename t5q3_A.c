@@ -4,21 +4,20 @@
 #include <unistd.h>
 #include <string.h>
 #include<pthread.h>
-
-
 #define PORT 8080
+
 int main()
 {
     int sock = 0, valread;
 	struct sockaddr_in serv_addr;
 	char buffer[1024] = {0};
-	char hello[50];
+	char input[100];
     printf("Enter a string:\n");
-    fgets(hello,50,stdin);
+    fgets(input,100,stdin);
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
-		printf("\n Socket creation error \n");
-		
+		printf("\n Socket creation error \n");	
+		return -1;
 	}
 
 	serv_addr.sin_family = AF_INET;
@@ -26,27 +25,15 @@ int main()
 	if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0)
 	{
 		printf("\nInvalid address/ Address not supported \n");
-		
+		return -1;
 	}
 
 	if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) != 0)
 	{
 		printf("\nConnection Failed \n");
-		
+		return -1;
 	}
 	send(sock , hello , strlen(hello) , 0 );
 	printf("Hello message sent\n");
-	//valread = read( sock , buffer, 1024);
-	//printf("%s\n",buffer );
-	/*while(1) {
-		sleep(1);
-		valread = read( sock , buffer, 1024);
-		if(valread<=0)  {
-		
-			printf("Error\n");
-
-		}	
-		printf("%s\n",buffer );
-	}*/
     return 0;
 }
