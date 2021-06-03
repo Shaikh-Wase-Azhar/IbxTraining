@@ -1,0 +1,3 @@
+Integer:10
+Float:10.000000
+Character:a
