@@ -1,0 +1,57 @@
+thread1_LCD reading data......
+thread1_LCD:buff:27.000000
+thread3_SHM reading data......
+thread3_SHM:buff:27.000000
+thread1_LCD:buff:27.000000
+thread3_SHM:buff:27.000000
+thread1_LCD:buff:27.000000
+thread3_SHM:buff:27.000000
+thread1_LCD:buff:27.000000
+thread3_SHM:buff:27.000000
+thread3_SHM:buff:27.000000
+thread1_LCD:buff:27.000000
+thread2_SSR Locked Updating Temp..32.000000
+
+thread3_SHM:buff:32.000000
+thread1_LCD:buff:32.000000
+thread3_SHM:buff:32.000000
+thread1_LCD:buff:32.000000
+thread3_SHM:buff:32.000000
+thread1_LCD:buff:32.000000
+thread1_LCD:buff:32.000000
+thread3_SHM:buff:32.000000
+thread2_SSR Locked Updating Temp..37.000000
+
+thread1_LCD:buff:37.000000
+thread3_SHM:buff:37.000000
+thread3_SHM:buff:37.000000
+thread1_LCD:buff:37.000000
+thread3_SHM:buff:37.000000
+thread1_LCD:buff:37.000000
+thread3_SHM:buff:37.000000
+thread2_SSR Locked Updating Temp..42.000000
+
+thread1_LCD:buff:42.000000
+thread1_LCD:buff:42.000000
+thread3_SHM:buff:42.000000
+thread3_SHM:buff:42.000000
+thread1_LCD:buff:42.000000
+thread1_LCD:buff:42.000000
+thread3_SHM:buff:42.000000
+thread2_SSR Locked Updating Temp..47.000000
+
+thread3_SHM:buff:47.000000
+thread1_LCD:buff:47.000000
+thread3_SHM:buff:47.000000
+thread1_LCD:buff:47.000000
+thread1_LCD:buff:47.000000
+thread3_SHM:buff:47.000000
+thread3_SHM:buff:47.000000
+thread1_LCD:buff:47.000000
+thread2_SSR Locked Updating Temp..52.000000
+
+thread3_SHM:buff:52.000000
+thread1_LCD:buff:52.000000
+thread3_SHM:buff:52.000000
+thread1_LCD:buff:52.000000
+^C
