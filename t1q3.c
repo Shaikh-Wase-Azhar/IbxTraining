@@ -50,6 +50,7 @@ int main()
   
   for(int i=0;i<sizeof(buff);i++)
   printf("%c",buff[i]);
-     //puts(buff);
+  printf("\n");   
+  //puts(buff);
     return 0;
 }
