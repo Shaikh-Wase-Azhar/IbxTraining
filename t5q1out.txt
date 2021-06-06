@@ -1,7 +1,13 @@
-Waiting at the barrierf......
-Waiting at the barrierf......
-Waiting at the barrierf......
-Waiting at the barrierf......
-Waiting at the barrierf......
+Server: Hello, World!
+Server: message received from c1 - asdf
+Server: Not able to send message to client: Bad file descriptor
+Server: message received from c2 - zxcvb
+Server: Not able to send message to client: Bad file descriptor
+Server: message received from c3 - qwert
+Server: Not able to send message to client: Bad file descriptor
+^C
 
-Connection Failed 
+
+C1:Enter the message for Reciever:asdf
+
+C2:Enter the message for Reciever:zxcvb
