@@ -1,0 +1,17 @@
+Parent:Enter the msg:football
+Parent:Sent string: "football" and string length is 8
+Parent:Received string: "football" and length is 8
+
+Parent:Enter the msg:cricket
+Parent:Sent string: "cricket" and string length is 7
+Child:Received string: "cricket" and length is 7
+
+Child:Enter the msg:hi
+Child:Sent string: "hi" and string length is 2
+Child:Received string: "hi" and length is 2
+
+Child:Enter the msg:hello
+Child:Sent string: "hello" and string length is 5
+Parent:Received string: "hello" and length is 5
+
+Parent:Enter the msg:^C
