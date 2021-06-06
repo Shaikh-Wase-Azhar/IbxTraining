@@ -1,0 +1,37 @@
+//Client A
+CLIENT_A: Send messages, infinitely, to end enter "end"
+Enter string: innobox
+CLIENT_A:Sent string: "innobox" and string length is 7
+
+Enter string: hi all
+CLIENT_A:Sent string: "hi all" and string length is 6
+
+Enter string: Debugging                
+CLIENT_A:Sent string: "Debugging" and string length is 9
+
+Enter string: ^C
+
+
+
+//Client B
+CLIENT_B:Received string from A: "innobox" and length is 7
+CLIENT_B:Sent string to C: "innobox" and string length is 7
+
+CLIENT_B:Received string from A: "hi all" and length is 6
+CLIENT_B:Sent string to C: "hi all" and string length is 6
+
+CLIENT_B:Received string from A: "Debugging" and length is 9
+CLIENT_B:Sent string to C: "Debugging" and string length is 9
+
+^C
+
+
+
+//Client C
+CLIENT_C:Received string from C: "innobox" and length is 7
+
+CLIENT_C:Received string from C: "hi all" and length is 6
+
+CLIENT_C:Received string from C: "Debugging" and length is 9
+
+^C
