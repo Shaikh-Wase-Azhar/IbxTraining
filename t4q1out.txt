@@ -1,0 +1,75 @@
+//Server
+Server: Hello, World!
+Server: message received from /sp-example-client-7334 - e-client-7334
+Server: response sent to client.
+Server: message received from /sp-example-client-7391 - e-client-7391
+Server: response sent to client.
+Server: message received from /sp-example-client-7396 - e-client-7396
+Server: response sent to client.
+Server: message received from /sp-example-client-7397 - e-client-7397
+Server: response sent to client.
+Server: message received from /sp-example-client-7334 - e-client-7334
+Server: response sent to client.
+Server: message received from /sp-example-client-7391 - e-client-7391
+Server: response sent to client.
+Server: message received from /sp-example-client-7396 - e-client-7396
+Server: response sent to client.
+Server: message received from /sp-example-client-7397 - e-client-7397
+Server: response sent to client.
+^C
+
+
+//client 1
+Client:Enter the message for Reciever:first
+Ask /sp-example-client-7334 for a token (Press <ENTER>): 
+Client: Token received from server: 1
+
+Ask for a token (Press ): 
+Client: Token received from server: 6
+
+Ask for a token (Press ): ^C
+
+
+//client 2
+Client:Enter the message for Reciever:second
+Ask /sp-example-client-7391 for a token (Press <ENTER>): 
+Client: Token received from server: 2
+
+Ask for a token (Press ): 
+Client: Token received from server: 7
+
+Ask for a token (Press ): ^C
+
+
+
+//client 3
+Client:Enter the message for Reciever:third
+Ask /sp-example-client-7396 for a token (Press <ENTER>):
+Client: Token received from server: 3
+
+Ask for a token (Press ): 
+Client: Token received from server: 8
+
+Ask for a token (Press ): ^C
+
+
+//client 4
+Client:Enter the message for Reciever:fourth
+Ask /sp-example-client-7397 for a token (Press <ENTER>):
+Client: Token received from server: 4
+
+Ask for a token (Press ): 
+Client: Token received from server: 9
+
+Ask for a token (Press ): ^C
+
+
+//client 5
+Client:Enter the message for Reciever:fourth
+Ask /sp-example-client-7397 for a token (Press <ENTER>):
+Client: Token received from server: 5
+
+Ask for a token (Press ): 
+Client: Token received from server: 10
+
+Ask for a token (Press ): ^C
