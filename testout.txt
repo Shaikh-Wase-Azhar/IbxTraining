@@ -1,0 +1,116 @@
+Philosopher 1 is done thinking and now ready to eat.
+Philosopher 0 is done thinking and now ready to eat.
+Philosopher 0: got right  chopstick 0
+Philosopher 3 is done thinking and now ready to eat.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 1: got right  chopstick 1
+Philosopher 1: got left chopstick 2
+Philosopher 1: eating.
+Philosopher 4 is done thinking and now ready to eat.
+Philosopher 2 is done thinking and now ready to eat.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 3: got right  chopstick 3
+Philosopher 3: got left chopstick 4
+Philosopher 3: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 4: got right  chopstick 4
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 2: got left chopstick 3
+Philosopher 2: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 2: got right  chopstick 2
+Philosopher 3: got right  chopstick 3
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 0: got right  chopstick 0
+Philosopher 0: got left chopstick 1
+Philosopher 0: eating.
+Philosopher 1: got right  chopstick 1
+Philosopher 0: got right  chopstick 0
+^C
