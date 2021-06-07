@@ -4,7 +4,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -150,13 +150,11 @@ int main(int argc, char const *argv[])
 		perror("listen");
 		exit(EXIT_FAILURE);
 	}
-
 	if (listen(server_fd2, 3) < 0)
 	{
 		perror("listen");
 		exit(EXIT_FAILURE);
 	}
-
 	//while(1) {
 		if ((new_client_socket = accept(server_fd, (struct sockaddr *)&address,
 						(socklen_t*)&addrlen))<0)
@@ -169,14 +167,12 @@ int main(int argc, char const *argv[])
 		printf("%s\n",buffer );
 		send(new_client_socket , hello , strlen(hello) , 0 );
 		printf("Hello message sent to client1\n\n");
-
 		if ((new_client_socket2 = accept(server_fd2, (struct sockaddr *)&address2,
 						(socklen_t*)&addrlen2))<0)
 		{
 			perror("accept");
 			exit(EXIT_FAILURE);
 		}
-
 		valread2 = read( new_client_socket2 , buffer2, 1024);
 		printf("%s\n",buffer2 );
 		send(new_client_socket2 , hello , strlen(hello) , 0 );
