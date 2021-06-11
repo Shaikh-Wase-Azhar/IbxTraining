@@ -1,4 +1,3 @@
-// Client side C/C++ program to demonstrate Socket programming
 #include <stdio.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -8,6 +7,13 @@
 
 int main(int argc, char const *argv[])
 {
+  //  char dataToBeWritten[50] = "hello its trial"; //
+
+    FILE *fp=fopen("/home/wase/myall/innobox/5day/info1.txt","a+");
+
+    //fputs(dataToBeWritten, fp) ;  //   
+    //fputs("\n", fp) ;   //
+
 	int sock = 0, valread;
 	struct sockaddr_in serv_addr;
 	char *hello = "Hello from client1...";
@@ -33,17 +39,23 @@ int main(int argc, char const *argv[])
 		printf("\nConnection Failed \n");
 		return -1;
 	}
-	send(sock , hello , strlen(hello) , 0 );
-	printf("Hello message sent\n");
-	valread = read( sock , buffer, 1024);
-	printf("%s\n",buffer );
-	while(1) {
-		sleep(1);
-		valread = read( sock , buffer, 1024);
-		if(valread<=0)  
-	    return 0;	
-		printf("%s\n",buffer );
-	}
+
+
+	//int linelen;
+	//for(linelen=0;fp[linelen]!='\n';linelen++);
+	//printf("line lenght is:%d\n",linelen);
+	send(sock , fp , 16, 0 );
+	printf("Message sent to server\n");
+	//valread = read( sock , buffer, 1024);
+	//printf("%s\n",buffer );
+	//while(1) {
+	//	sleep(1);
+	//	valread = read( sock , buffer, 1024);
+	//	if(valread<=0)  
+	  //  return 0;	
+	//	printf("%s\n",buffer );
+	//}
+   
+   // fclose(fp);
 	return 0;
 }
-
