@@ -1,142 +1,144 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <string.h>
-#include <signal.h>
 #include <arpa/inet.h>
 #include <fcntl.h> // for open
 #include <unistd.h> // for close
 #include <pthread.h>
 #define PORT 8080
-#define MAXLINE 1024
+#define MAXSIZE 1024
 
-/*int max(int x, int y)
-{
-	if (x > y)
-		return x;
-	else
-		return y;
-}
+
+int serverSocket, newSocket,maxfdp1;
+struct sockaddr_in serverAddr,cliaddr;
+char buffer[MAXSIZE]= {0};
+fd_set rset;
+socklen_t len;
+
+/*
+FILE *fp1=fopen("/home/wase/myall/innobox/5day/info1.txt","r");
+FILE *fp2=fopen("/home/wase/myall/innobox/5day/info2.txt","r");
+FILE *fp3=fopen("/home/wase/myall/innobox/5day/info3.txt","r");
 */
 
-char client_message[2000];
-char buffer[1024];
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
-
-void * socketThread(void *arg)
-{
-  int newSocket = *((int *)arg);
-  recv(newSocket , client_message , 2000 , 0);
-
-  
-   while(1) {
-	printf("Waiting on socket %d\n",newSocket);
-	sleep(2);
-
-   }			
-}
-
-int main(){
-  int serverSocket, newSocket,maxfdp1;;
-  struct sockaddr_in serverAddr,cliaddr;
-  struct sockaddr_storage serverStorage;
-  socklen_t addr_size;
-
-	char buffer[MAXLINE];
-	pid_t childpid;
-	fd_set rset;
-	socklen_t len;
-	char* message = "Hello Client";
-
-//  FILE *fp=fopen("/home/wase/myall/innobox/5day/info1.txt","r");
-
-// create listening TCP socket 
-	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-	bzero(&serverAddr, sizeof(serverAddr));
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	serverAddr.sin_port = htons(PORT);
-
-// binding server addr structure to listenfd
-	bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	listen(serverSocket, 10);
-
-  //Set all bits of the padding field to 0 
-  memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
-
-  //Bind the address struct to the socket 
-  bind(serverSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
-
-// clear the descriptor set
-	FD_ZERO(&rset);
-  //maxfdp1 = max(serverSocket) + 1;
- maxfdp1 = serverSocket + 1;
-for (;;) {
-		// set listenfd and udpfd in readset
+void * socketThread()
+{  
+for (;;)
+ {
+		// set ServerSocket in readset
 		FD_SET(serverSocket, &rset);
 
 		// select the ready descriptor
     select(maxfdp1, &rset, NULL, NULL, NULL);
 
+    printf("Server:Send the Message.....");
+			
 		// if tcp socket is readable then handle
 		// it by accepting the connection
 		if (FD_ISSET(serverSocket, &rset)) {
-			//len = sizeof(cliaddr);
-      len = sizeof(serverAddr);
-			//newSocket = accept(serverSocket, (struct sockaddr*)&cliaddr, &len);
-      newSocket = accept(serverSocket, (struct sockaddr*)&serverAddr, &len);
+			len = sizeof(cliaddr);
       
-      if ((childpid = fork()) == 0) {
-				close(serverSocket);
-			//	bzero(buffer, sizeof(buffer));
-				printf("Message From TCP client %d is: ", newSocket);
-				memset(buffer, 0, sizeof(buffer));
-        read(newSocket, buffer, sizeof(buffer));
-				puts(buffer);
-				//write(newSocket, (const char*)message, sizeof(buffer));
-				close(newSocket);
-				exit(0);
-			}
+			newSocket = accept(serverSocket, (struct sockaddr*)&cliaddr, &len);
+      
+			//	bzero(buffer, MAXSIZE);
+			printf("Message From TCP client %d is: ", newSocket);
+			memset(buffer, 0, MAXSIZE );
+
+      //recv(newSocket , buffer , 2000 , 0);  
+      read(newSocket, buffer, MAXSIZE);
+			puts(buffer);
+				
+      //write(newSocket, (const char*)message, MAXSIZE);
 			close(newSocket);
 		}
+	}			
+}
+
+
+int main(){
+
+  int serverSocket=0, newSocket,maxfdp1;
+
+  struct sockaddr_storage serverStorage;
+  socklen_t addr_size;
+
+//FILE *fp=fopen("/home/wase/myall/innobox/5day/info1.txt","r");
+
+// create listening TCP socket 
+	if((serverSocket = socket(AF_INET, SOCK_STREAM, 0))<0)
+  {
+		printf("\n Socket creation error \n");
+		return -1;
 	}
-////
 
-/*
-  //Listen on the socket, with 40 max connection requests queued 
-  if(listen(serverSocket,50)==0)
-    printf("Listening\n");
-  else
-    printf("Error\n");
-    pthread_t tid[60];
-    int i = 0;
-    while(1)
+	//bzero(&serverAddr, sizeof(serverAddr));
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	serverAddr.sin_port = htons(PORT);
+
+//memory set to zero
+	memset(&serverAddr, 0, sizeof(serverAddr));
+	memset(&cliaddr, 0, sizeof(cliaddr));
+
+// binding server addr structure to serverSocket
+	bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+	listen(serverSocket, 10);
+
+  //Set all bits of the padding field to 0 
+  //memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
+
+// clear the descriptor set
+	FD_ZERO(&rset);
+
+//Max fd to select
+ maxfdp1 = serverSocket + 1;
+
+//Listen on the socket, with 40 max connection requests queued 
+if(listen(serverSocket,3)==0)
+printf("Listening....\n");
+else
+printf("Error, Limit over\n");
+
+pthread_t tid[3];
+
+int i;
+for(i=0;i<3;i++)
     {
+      printf("check1\n");
         //Accept call creates a new socket for the incoming connection
-        addr_size = sizeof serverStorage;
-        newSocket = accept(serverSocket, (struct sockaddr *) &serverStorage, &addr_size);
+        //addr_size = sizeof cliaddr;
+        if ((newSocket = accept(serverSocket, (struct sockaddr *)&cliaddr,
+						(socklen_t*)&cliaddr))<0)
+		{
+			perror("accept");
+			exit(EXIT_FAILURE);
+		}
+        //read(newSocket, buffer, sizeof(buffer));
+				//printf("Data received from client %d is:",newSocket);
+        //puts(buffer);
 
-        read(newSocket, buffer, sizeof(buffer));
-				printf("Data received from client %d is:",newSocket);
-        puts(buffer);
-
-        //for each client request creates a thread and assign the client request to it to process
-       //so the main thread can entertain next request
-        if( pthread_create(&tid[i++], NULL, socketThread, &newSocket) != 0 )
+printf("check2\n");
+        //creating thread for each client
+        if( pthread_create(&tid[i++], NULL, socketThread, NULL) != 0 )
            printf("Failed to create thread\n");
 
-        if( i >= 50)
+        if( i >= 3)
         {
           i = 0;
-          while(i < 50)
+          while(i < 3)
           {
             pthread_join(tid[i++],NULL);
           }
           i = 0;
         }
-    }*/
+    }
+/*
+  fclose(fp1);
+	fclose(fp2);
+	fclose(fp3);
+*/
   return 0;
 }
