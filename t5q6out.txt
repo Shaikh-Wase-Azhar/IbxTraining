@@ -1,16 +1,39 @@
 //server 
 Listening....
-check1
-check1
-check1
-check2
-check2
-check2
+Server:Send the Filename.....
 ^C
 
+
 //client 
-check
 Files: info1	info2	info3
-Enter File name from which data is to be fetched:
-info1
-//terminating
+Enter File name from which data is to be fetched:info1
+Msg Received:File 1 line 1
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info2
+Msg Received:File 2 line 1
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info3
+Msg Received:File 3 line 1
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info1
+Msg Received:File 1 line 2
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info1
+Msg Received:File 1 line 3
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info2
+Msg Received:File 2 line 2
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info4
+Msg Received:Wrong Filename...
+
+Files: info1	info2	info3
+Enter File name from which data is to be fetched:info2
+Msg Received:File 2 line 3
+^C
