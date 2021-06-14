@@ -8,20 +8,16 @@
 
 #define PORT 8080
 #define MAXSIZE 1024
-
-//FILE *fp1= fopen("/home/wase/myall/innobox/5day/info1.txt","a+");
-//FILE *fp2=fopen("/home/wase/myall/innobox/5day/info2.txt","a+");
-//FILE *fp3=fopen("/home/wase/myall/innobox/5day/info3.txt","a+");
+//#define INADDR_ANY  "127.0.0.1"
 
 int main(int argc, char const *argv[])
 {
-  //  char dataToBeWritten[50] = "hello its trial";   
-	//fputs(dataToBeWritten, fp) ;     
-    //fputs("\n", fp) ;   
 	int clientSocket = 0, valread;
 	struct sockaddr_in serverAddr;
 	char buffer[MAXSIZE] = {0};
-	
+	char filename[10]= {0};
+	//char *hellocheck = "Hellocheck";
+
 	if ((clientSocket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		printf("\n Socket creation error \n");
@@ -30,6 +26,7 @@ int main(int argc, char const *argv[])
 
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(PORT);
+	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	//memory set to zero
 	memset(&serverAddr, 0, sizeof(serverAddr));
@@ -48,28 +45,20 @@ int main(int argc, char const *argv[])
 	}
 
 	printf("check\n");
-	
-	//send(clientSocket , fp , 16, 0 );
 
-	char *hellocheck = "Hellocheck";
-	send(clientSocket , hellocheck ,sizeof(hellocheck), 0 );
-	printf("Message sent to server\n");
+	for(int i=0; i<30;i++){
 	
-	printf("check\n");
+	//send(clientSocket , hellocheck ,sizeof(hellocheck), 0 );
+	printf("Files: info1\tinfo2\tinfo3\nEnter File name from which data is to be fetched:\n");
+	scanf("%s",filename);
 
-	//valread = read( sock , buffer, 1024);
-	//printf("%s\n",buffer );
-	//while(1) {
-	//	sleep(1);
-	//	valread = read( sock , buffer, 1024);
-	//	if(valread<=0)  
-	  //  return 0;	
-	//	printf("%s\n",buffer );
-	//}
-   
-	//fclose(fp1);
-	//fclose(fp2);
-	//fclose(fp3);
+	//send(clientSocket , hellocheck ,sizeof(hellocheck), 0 );
+	send(clientSocket , filename ,sizeof(filename), 0 );
+	
+	valread = read( clientSocket , buffer, MAXSIZE);
+	buffer[valread]='\0';
+	printf("Msg Received:%s\n",buffer );
+	}	
 	close(clientSocket);
-	return 0;
+return 0;
 }
