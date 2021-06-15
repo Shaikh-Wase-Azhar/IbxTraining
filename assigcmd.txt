@@ -1,0 +1,51 @@
+
+
+sqlite3 assig.db
+
+create table org(orgid INTEGER not null primary key autoincrement,orgname varchar(128) not null, orgaddr varchar(128) not null);
+
+insert into org(orgid, orgname, orgaddr) values (1, 'orgname1', 'orgaddr1');
+insert into org(orgid, orgname, orgaddr) values (2, 'orgname2', 'orgaddr2');
+
+select * from org;
+
+PRAGMA foreign_keys=on;
+create table dept(deptid INTEGER not null primary key autoincrement,deptname varchar(128) not null, orgid integer not null, constraint dpt_fk_orgid foreign key (orgid) references org(orgid) on update cascade on delete cascade);
+
+insert into dept(deptid, deptname, orgid) values (11, 'deptname1', '1');
+insert into dept(deptid, deptname, orgid) values (12, 'deptname2', '1');
+insert into dept(deptid, deptname, orgid) values (21, 'deptname3', '2');
+insert into dept(deptid, deptname, orgid) values (22, 'deptname4', '2');
+insert into dept(deptid, deptname, orgid) values (23, 'deptname5', '2');
+
+PRAGMA foreign_keys=on;
+create table emp(empid INTEGER not null primary key autoincrement,empname varchar(128) not null, orgid integer not null, deptid integer not null, constraint emp_fk_orgid foreign key (orgid) references org(orgid) on update cascade on delete cascade, constraint emp_fk_deptid foreign key (deptid) references dept(deptid) on update cascade on delete cascade);
+
+insert into emp(empid, empname, orgid, deptid) values (111, 'empname1', 1, 11);
+insert into emp(empid, empname, orgid, deptid) values (121, 'empname2', 1, 12);
+insert into emp(empid, empname, orgid, deptid) values (122, 'empname3', 1, 12);insert into emp(empid, empname, orgid, deptid) values (211, 'empname4', 2, 21);
+insert into emp(empid, empname, orgid, deptid) values (212, 'empname5', 2, 21);insert into emp(empid, empname, orgid, deptid) values (213, 'empname6', 2, 21);insert into emp(empid, empname, orgid, deptid) values (221, 'empname7', 2, 22);insert into emp(empid, empname, orgid, deptid) values (222, 'empname8', 2, 22);insert into emp(empid, empname, orgid, deptid) values (231, 'empname9', 2, 23);insert into emp(empid, empname, orgid, deptid) values (232, 'empname10', 2, 23);
+
+1] result for Numbers of employees in each department with deptid & deptname
+select e.deptid, deptname, count(*) from emp e inner join dept d on d.deptid= e.deptid group by e.deptid;
+
+/*above with descending order..
+select e.deptid, deptname, count(*) from emp e inner join dept d on d.deptid= e.deptid group by e.deptid order by count(*) desc;
+*/
+
+2] org with highest number of dept
+create view temp as select d.orgid, orgname, count(*) as deptcount from dept d inner join org o on d.orgid= o.orgid group by d.orgid order by count(*) desc;
+
+select orgid, orgname, max(deptcount) from temp;
+
+/*
+select d.orgid, orgname, count(*) from dept d inner join org o on o.orgid= d.orgid group by d.orgid;
+
+select d.orgid, orgname, count(*) as deptcount from dept d inner join org o on d.orgid= o.orgid group by d.orgid order by count(*) desc;
+*/
+
+
+3] org with highest number of employees 
+ create view temp1 as select e.orgid, orgname, count(*) as empcount from emp e inner join org o on e.orgid= o.orgid group by e.orgid order by count(*) desc;
+
+select orgid, orgname, max(empcount) from temp1;
